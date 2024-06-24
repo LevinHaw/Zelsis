@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Zelsis</string>
+    <string name="desc">Explore all the most exciting experience and feel magical journey and start with US</string>
+    <string name="title_welcome">Let\'s create story together</string>
+    <string name="subtitle_welcome">Welcome!</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up</string>
 </resources>
