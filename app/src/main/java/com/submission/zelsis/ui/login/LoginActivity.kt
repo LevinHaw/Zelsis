@@ -1,4 +1,4 @@
-package com.submission.zelsis.view.login
+package com.submission.zelsis.ui.login
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

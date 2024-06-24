@@ -1,4 +1,4 @@
-package com.submission.zelsis.view.welcome
+package com.submission.zelsis.ui.welcome
 
 import android.content.Intent
 import android.os.Bundle

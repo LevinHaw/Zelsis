@@ -15,13 +15,13 @@
         android:theme="@style/Theme.Zelsis"
         tools:targetApi="31">
         <activity
-            android:name=".view.login.LoginActivity"
+            android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".view.welcome.WelcomeActivity"
+            android:name=".ui.welcome.WelcomeActivity"
             android:exported="false" />
         <activity
-            android:name=".view.welcome.SplashScreen"
+            android:name=".ui.welcome.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
