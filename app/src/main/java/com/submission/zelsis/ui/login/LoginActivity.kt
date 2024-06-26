@@ -2,6 +2,7 @@ package com.submission.zelsis.ui.login
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityLoginBinding
+import com.submission.zelsis.ui.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -29,6 +31,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         playAnimate()
+
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
     }
 
