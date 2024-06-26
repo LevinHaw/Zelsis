@@ -1,5 +1,6 @@
 package com.submission.zelsis.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -9,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityHomeBinding
+import com.submission.zelsis.ui.add_story.AddStoryActivity
 import com.submission.zelsis.ui.profile.ProfileFragment
 
 class HomeActivity : AppCompatActivity() {
@@ -48,6 +50,11 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
             true
+        }
+
+        binding.fabAdd.setOnClickListener {
+            val intent = Intent(this@HomeActivity, AddStoryActivity::class.java)
+            startActivity(intent)
         }
     }
 
