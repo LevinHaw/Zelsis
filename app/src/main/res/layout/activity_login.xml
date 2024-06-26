@@ -17,8 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
         tools:alpha="100"
-        android:alpha="0"/>
+        android:alpha="0"
+        android:contentDescription="@string/content_img_desc"/>
 
     <TextView
         android:id="@+id/tvWelcome"
@@ -93,8 +95,9 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="50dp"
+            android:paddingEnd="0dp"
             android:textColorHint="@color/dark_purple"
-            android:textSize="18sp"
+            android:textSize="15sp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -142,12 +145,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="50dp"
+            android:paddingEnd="0dp"
             android:fontFamily="@font/calistoga"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:textColorHint="@color/dark_purple"
             android:backgroundTint="@color/white"
-            android:textSize="18sp"
+            android:textSize="15sp"
              />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -167,13 +171,6 @@
         app:layout_constraintTop_toBottomOf="@+id/tilPassword"
         tools:alpha="100"
         android:alpha="0"/>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50121653" />
 
 
     <TextView
