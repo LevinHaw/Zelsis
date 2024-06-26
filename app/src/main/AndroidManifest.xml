@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Zelsis"
         tools:targetApi="31">
         <activity
+            android:name=".ui.add_story.AddStoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.home.HomeActivity"
             android:exported="false" />
         <activity
