@@ -6,4 +6,10 @@
     <color name="dark_green">#013f3c</color>
     <color name="cream">#f3e3d6</color>
     <color name="light_green">#346d5e</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="light_purple">#b2a4ff</color>
+    <color name="dark_purple">#3a3b7b</color>
 </resources>
