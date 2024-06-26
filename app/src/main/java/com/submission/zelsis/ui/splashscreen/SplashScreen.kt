@@ -1,4 +1,4 @@
-package com.submission.zelsis.ui.welcome
+package com.submission.zelsis.ui.splashscreen
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivitySplashScreenBinding
+import com.submission.zelsis.ui.welcome.WelcomeActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
