@@ -2,6 +2,7 @@ package com.submission.zelsis.ui.welcome
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -10,6 +11,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityWelcomeBinding
+import com.submission.zelsis.ui.login.LoginActivity
+import com.submission.zelsis.ui.signup.SignUpActivity
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -29,6 +32,16 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         playAnimate()
+
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(this@WelcomeActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnSignup.setOnClickListener {
+            val intent = Intent(this@WelcomeActivity, SignUpActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
