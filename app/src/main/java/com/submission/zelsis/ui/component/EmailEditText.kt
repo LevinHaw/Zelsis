@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatEditText
+import com.submission.zelsis.R
 
 class EmailEditText: AppCompatEditText {
 
@@ -34,9 +35,8 @@ class EmailEditText: AppCompatEditText {
                 val email = s.toString().trim()
                 val emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.+[a-z]+"
                 val isValidEmail = email.matches(emailPattern.toRegex())
-
                 if (!isValidEmail) {
-                    setError("Type format email correctly", null)
+                    setError(context.getString(R.string.invalid_email_format), null)
                 } else {
                     error = null
                 }
