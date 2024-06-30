@@ -7,6 +7,7 @@ import com.submission.zelsis.di.Injection
 import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.login.LoginViewModel
 import com.submission.zelsis.ui.signup.SignUpViewModel
+import com.submission.zelsis.ui.splashscreen.SplashScreenViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository
@@ -15,6 +16,9 @@ class ViewModelFactory(
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(SplashScreenViewModel::class.java) -> {
+                SplashScreenViewModel(userRepository) as T
+            }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository) as T
             }
