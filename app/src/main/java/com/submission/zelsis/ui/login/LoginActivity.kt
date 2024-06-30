@@ -39,6 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
         playAnimate()
         setupAction()
+        checkingResult()
 
     }
 
@@ -54,14 +55,16 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(
                     this,
-                    getString(R.string.email_or_password_empty),
+                    getString(R.string.email_or_password_isempty),
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
                 viewModel.login(email, password)
             }
         }
+    }
 
+    private fun checkingResult(){
         viewModel.isError.observe(this) { isError ->
             if (isError) {
                 Toast.makeText(

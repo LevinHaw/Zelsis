@@ -58,7 +58,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:fontFamily="@font/calistoga"
-        android:text="@string/username"
+        android:text="@string/name"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,10 +87,11 @@
         tools:alpha="100">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/calistoga"
-            android:hint="@string/username"
+            android:hint="@string/name"
             android:inputType="textEmailAddress"
             android:paddingStart="50dp"
             android:paddingEnd="0dp"
@@ -243,6 +244,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
