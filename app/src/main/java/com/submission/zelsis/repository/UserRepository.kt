@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.submission.zelsis.data.local.preference.UserPreference
 import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.data.remote.response.LoginResponse
+import com.submission.zelsis.data.remote.response.RegisterResponse
 import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.util.Result
@@ -33,6 +34,19 @@ class UserRepository private constructor(
             val response = Gson().fromJson(error, LoginResponse::class.java)
             Result.Error(response, "There is an error with server respond")
         } catch (e: Exception){
+            Result.Error(null, e.message.toString())
+        }
+    }
+
+    suspend fun signUp(name: String, email: String, password: String): Result<RegisterResponse> {
+        return try {
+            val register = apiService.register(name,email, password)
+            Result.Success(register)
+        } catch (e: HttpException){
+            val error = e.response()?.errorBody()?.string()
+            val response = Gson().fromJson(error, RegisterResponse::class.java)
+            Result.Error(response, "There is an error with server respond")
+        } catch (e: Exception) {
             Result.Error(null, e.message.toString())
         }
     }

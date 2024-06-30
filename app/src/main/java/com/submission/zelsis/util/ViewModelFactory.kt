@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.submission.zelsis.di.Injection
 import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.login.LoginViewModel
+import com.submission.zelsis.ui.signup.SignUpViewModel
 
 class ViewModelFactory(
     private val userRepository: UserRepository
@@ -16,6 +17,9 @@ class ViewModelFactory(
         return when {
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(SignUpViewModel::class.java) -> {
+                SignUpViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

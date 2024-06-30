@@ -2,18 +2,29 @@ package com.submission.zelsis.ui.signup
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivitySignUpBinding
+import com.submission.zelsis.ui.home.HomeActivity
+import com.submission.zelsis.ui.login.LoginActivity
+import com.submission.zelsis.ui.login.LoginViewModel
+import com.submission.zelsis.util.ViewModelFactory
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
+
+    private val viewModel by viewModels<SignUpViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +40,50 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         playAnimate()
+        setupAction()
+        checkResult()
 
+    }
+
+    private fun setupAction(){
+        viewModel.isLoading.observe(this){
+            showLoading(it)
+        }
+
+        binding.btnRegister.setOnClickListener {
+            val name = binding.etName.text.toString()
+            val email = binding.etEmail.text.toString()
+            val password = binding.etPassword.text.toString()
+
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.email_or_password_isempty),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                viewModel.register(name, email, password)
+            }
+        }
+    }
+
+    private fun checkResult(){
+        viewModel.isError.observe(this) { isError ->
+            if (isError) {
+                Toast.makeText(
+                    this,
+                    getString(R.string.register_failed),
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(this, getString(R.string.register_success), Toast.LENGTH_SHORT).show()
+
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                startActivity(intent)
+                finish()
+            }
+        }
     }
 
     private fun playAnimate() {
@@ -67,5 +121,9 @@ class SignUpActivity : AppCompatActivity() {
                 together2)
             startDelay = 100
         }.start()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
