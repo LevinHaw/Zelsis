@@ -39,7 +39,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
                     _result.value = loginResponse.message.toString()
                     _isLoading.value = false
 
-                    _userToken.value = UserModel(name, token)
+                    _userToken.value = UserModel(name, token, isLogin = true)
                     saveSession(userToken.value!!)
                 }
                 is Result.Error -> {
