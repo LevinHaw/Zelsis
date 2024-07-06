@@ -5,6 +5,7 @@ import com.submission.zelsis.data.local.preference.UserPreference
 import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.data.remote.response.LoginResponse
 import com.submission.zelsis.data.remote.response.RegisterResponse
+import com.submission.zelsis.data.remote.response.StoryResponse
 import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.util.Result
@@ -52,6 +53,19 @@ class UserRepository private constructor(
 
     suspend fun logout(){
         userPreference.logout()
+    }
+
+    suspend fun getAllStory(): Result<StoryResponse>{
+        return try {
+            val getAllStory = apiService.getAllStory()
+            Result.Success(getAllStory)
+        } catch (e: HttpException){
+            val error = e.response()?.errorBody()?.string()
+            val response = Gson().fromJson(error, StoryResponse::class.java)
+            Result.Error(response, "There is an error with server respond")
+        } catch (e: Exception){
+            Result.Error(null, e.message.toString())
+        }
     }
 
     companion object {
