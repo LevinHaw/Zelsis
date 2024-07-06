@@ -1,60 +1,88 @@
 package com.submission.zelsis.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.submission.zelsis.R
+import com.submission.zelsis.data.remote.response.ListStoryItem
+import com.submission.zelsis.data.remote.retrofit.ApiService
+import com.submission.zelsis.databinding.FragmentHomeBinding
+import com.submission.zelsis.repository.UserRepository
+import com.submission.zelsis.ui.adapter.StoryAdapter
+import com.submission.zelsis.util.ViewModelFactory
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
+
+    private val homeViewModel: HomeViewModel by viewModels {
+        ViewModelFactory.getInstance(requireContext())
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        homeViewModel.getAllStory()
+        setupAction()
+        checkingResult()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun setupAction(){
+        homeViewModel.isLoading.observe(viewLifecycleOwner, Observer{
+            showLoading(it)
+        })
+        homeViewModel.stories.observe(viewLifecycleOwner, Observer{ stories ->
+            setAdapter(stories)
+        })
+    }
+
+    private fun setAdapter(stories: List<ListStoryItem>){
+        val adapter = StoryAdapter()
+        adapter.submitList(stories)
+        binding.rvStory.adapter = adapter
+        binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun checkingResult(){
+        homeViewModel.isError.observe(viewLifecycleOwner, Observer{ isError ->
+            if (isError){
+                Toast.makeText(requireActivity(), "Cannot retrieve story", Toast.LENGTH_SHORT).show()
+            } else {
+                homeViewModel.message.observe(viewLifecycleOwner, Observer{
+                    Log.d(TAG, "Retrieve story success")
+                })
+            }
+        })
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+        private const val TAG = "HomeFragment"
     }
+
 }

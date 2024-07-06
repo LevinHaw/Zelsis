@@ -28,6 +28,12 @@ class UserPreference private constructor(
         }
     }
 
+    fun getToken(): Flow<String>{
+        return dataStore.data.map { preferences ->
+            preferences[TOKEN_KEY] ?: ""
+        }
+    }
+
     suspend fun saveSession(user: UserModel){
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
