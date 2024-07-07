@@ -2,6 +2,7 @@ package com.submission.zelsis.repository
 
 import com.google.gson.Gson
 import com.submission.zelsis.data.local.preference.UserPreference
+import com.submission.zelsis.data.remote.response.ImageUploadResponse
 import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.data.remote.response.LoginResponse
 import com.submission.zelsis.data.remote.response.RegisterResponse
@@ -10,7 +11,12 @@ import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.util.Result
 import kotlinx.coroutines.flow.Flow
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
+import java.io.File
 
 class UserRepository private constructor(
     private val userPreference: UserPreference,
@@ -65,6 +71,38 @@ class UserRepository private constructor(
             Result.Error(response, "There is an error with server respond")
         } catch (e: Exception){
             Result.Error(null, e.message.toString())
+        }
+    }
+
+    suspend fun postStory(image: File, description: String): Result<ImageUploadResponse>{
+        return try {
+            val requestDesc = description.toRequestBody(
+                "text/plain".toMediaType()
+            )
+
+            val requestImg = image.asRequestBody(
+                "image/jpeg".toMediaType()
+            )
+
+            val multiPart = MultipartBody.Part.createFormData(
+                "photo", image.name , requestImg
+            )
+
+            val postStory = apiService.postStory(multiPart, requestDesc)
+            Result.Success(postStory)
+
+        } catch (e: HttpException){
+            val error = e.response()?.errorBody()?.string()
+            val response = Gson().fromJson(error, ImageUploadResponse::class.java)
+            Result.Error(response, "There is an error with server respond")
+        } catch (e: Exception){
+            Result.Error(null, e.message.toString())
+        }
+    }
+
+    fun updateToken(token: String) {
+        instance?.let {
+            it.apiService = ApiConfig.getApiService(token)
         }
     }
 

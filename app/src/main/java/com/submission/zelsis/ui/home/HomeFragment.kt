@@ -14,6 +14,7 @@ import com.submission.zelsis.R
 import com.submission.zelsis.data.remote.response.ListStoryItem
 import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.databinding.FragmentHomeBinding
+import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.adapter.StoryAdapter
 import com.submission.zelsis.util.ViewModelFactory
@@ -31,9 +32,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        takeName()
         homeViewModel.getAllStory()
         setupAction()
         checkingResult()
+
     }
 
     override fun onCreateView(
@@ -78,6 +81,12 @@ class HomeFragment : Fragment() {
                     Log.d(TAG, "Retrieve story success")
                 })
             }
+        })
+    }
+
+    private fun takeName(){
+        homeViewModel.name.observe(viewLifecycleOwner, Observer{ name ->
+            binding.tvName.text = name
         })
     }
 
