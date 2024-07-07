@@ -8,6 +8,7 @@ import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.add_story.AddStoryViewModel
 import com.submission.zelsis.ui.home.HomeViewModel
 import com.submission.zelsis.ui.login.LoginViewModel
+import com.submission.zelsis.ui.profile.ProfileViewModel
 import com.submission.zelsis.ui.signup.SignUpViewModel
 import com.submission.zelsis.ui.splashscreen.SplashScreenViewModel
 
@@ -29,6 +30,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(userRepository) as T
             }
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
                 AddStoryViewModel(userRepository) as T

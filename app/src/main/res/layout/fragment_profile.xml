@@ -62,10 +62,11 @@
         android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:focusable="false"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/tvEmail"
-        android:text="@string/email"/>
+        android:hint="@string/email"/>
 
     <TextView
         android:id="@+id/tvPhoneNumber"
@@ -83,10 +84,11 @@
         android:id="@+id/etPhoneNumber"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:focusable="false"
         app:layout_constraintEnd_toStartOf="@+id/guideline6"
         app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toBottomOf="@+id/tvPhoneNumber"
-        android:text="@string/phone_number"/>
+        android:hint="@string/phone_number"/>
 
 
     <Button
@@ -122,5 +124,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="37dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
