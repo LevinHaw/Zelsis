@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.submission.zelsis.di.Injection
 import com.submission.zelsis.repository.UserRepository
+import com.submission.zelsis.ui.add_story.AddStoryViewModel
 import com.submission.zelsis.ui.home.HomeViewModel
 import com.submission.zelsis.ui.login.LoginViewModel
 import com.submission.zelsis.ui.signup.SignUpViewModel
@@ -28,6 +29,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(HomeViewModel::class.java) -> {
                 HomeViewModel(userRepository) as T
+            }
+            modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
+                AddStoryViewModel(userRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

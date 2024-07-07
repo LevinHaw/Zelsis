@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityLoginBinding
 import com.submission.zelsis.ui.home.HomeActivity
+import com.submission.zelsis.ui.signup.SignUpActivity
 import com.submission.zelsis.util.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
@@ -61,6 +62,11 @@ class LoginActivity : AppCompatActivity() {
             } else {
                 viewModel.login(email, password)
             }
+        }
+
+        binding.tvSuggest.setOnClickListener {
+            val intent = Intent(this, SignUpActivity::class.java)
+            startActivity(intent)
         }
     }
 

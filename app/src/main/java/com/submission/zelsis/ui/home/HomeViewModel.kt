@@ -6,8 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.submission.zelsis.data.remote.response.ListStoryItem
+import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.util.Result
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -25,6 +27,13 @@ class HomeViewModel(
 
     private val _stories = MutableLiveData<List<ListStoryItem>>()
     val stories: LiveData<List<ListStoryItem>> = _stories
+
+    private val _name = MutableLiveData<String?>()
+    val name: MutableLiveData<String?> = _name
+
+    init {
+        getName()
+    }
 
     fun getAllStory(){
         _isLoading.value = true
@@ -48,6 +57,14 @@ class HomeViewModel(
                     _isError.value = false
                     _isLoading.value = true
                 }
+            }
+        }
+    }
+
+    private fun getName(){
+        viewModelScope.launch {
+            userRepository.getSession().collectLatest { userModel ->
+                _name.value = userModel.email
             }
         }
     }
