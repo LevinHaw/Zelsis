@@ -21,7 +21,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: ProfileViewModel by viewModels {
-        ViewModelFactory.getInstance(requireContext())
+        ViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onCreateView(
