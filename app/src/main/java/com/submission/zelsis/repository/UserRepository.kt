@@ -1,6 +1,7 @@
 package com.submission.zelsis.repository
 
 import com.google.gson.Gson
+import com.submission.zelsis.R
 import com.submission.zelsis.data.local.preference.UserPreference
 import com.submission.zelsis.data.remote.response.ImageUploadResponse
 import com.submission.zelsis.data.remote.retrofit.ApiService
@@ -38,7 +39,7 @@ class UserRepository private constructor(
         } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
             val response = Gson().fromJson(error, LoginResponse::class.java)
-            Result.Error(response, "There is an error with server respond")
+            Result.Error(response, R.string.error_server_respond.toString())
         } catch (e: Exception){
             Result.Error(null, e.message.toString())
         }
@@ -51,7 +52,7 @@ class UserRepository private constructor(
         } catch (e: HttpException){
             val error = e.response()?.errorBody()?.string()
             val response = Gson().fromJson(error, RegisterResponse::class.java)
-            Result.Error(response, "There is an error with server respond")
+            Result.Error(response, R.string.error_server_respond.toString())
         } catch (e: Exception) {
             Result.Error(null, e.message.toString())
         }
@@ -68,7 +69,7 @@ class UserRepository private constructor(
         } catch (e: HttpException){
             val error = e.response()?.errorBody()?.string()
             val response = Gson().fromJson(error, StoryResponse::class.java)
-            Result.Error(response, "There is an error with server respond")
+            Result.Error(response, R.string.error_server_respond.toString())
         } catch (e: Exception){
             Result.Error(null, e.message.toString())
         }
@@ -94,7 +95,7 @@ class UserRepository private constructor(
         } catch (e: HttpException){
             val error = e.response()?.errorBody()?.string()
             val response = Gson().fromJson(error, ImageUploadResponse::class.java)
-            Result.Error(response, "There is an error with server respond")
+            Result.Error(response, R.string.error_server_respond.toString())
         } catch (e: Exception){
             Result.Error(null, e.message.toString())
         }
