@@ -21,6 +21,7 @@ import com.submission.zelsis.databinding.ActivityAddStoryBinding
 import com.submission.zelsis.ui.home.HomeActivity
 import com.submission.zelsis.ui.login.LoginViewModel
 import com.submission.zelsis.util.ViewModelFactory
+import com.submission.zelsis.util.getImageUri
 import com.submission.zelsis.util.reduceFileImage
 import com.submission.zelsis.util.uriToFile
 
@@ -77,6 +78,20 @@ class AddStoryActivity : AppCompatActivity() {
             postStory()
         }
 
+        binding.ibBack.setOnClickListener {
+            val intent = Intent(this, HomeActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+        }
+
+        binding.btnCamera.setOnClickListener {
+            if (!allPermissionsGranted()){
+                requestPermissionLauncher.launch(REQUIRED_PERMISSION)
+            } else {
+                startCamera()
+            }
+        }
+
 
     }
 
@@ -92,6 +107,19 @@ class AddStoryActivity : AppCompatActivity() {
             showImage()
         } else {
             Log.e("Photo picker", "Photo media error")
+        }
+    }
+
+    private fun startCamera(){
+        currentImageUri = getImageUri(this)
+        launcherCamera.launch(currentImageUri!!)
+    }
+
+    private val launcherCamera = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ){ isSuccess ->
+        if (isSuccess){
+            showImage()
         }
     }
 
@@ -121,7 +149,12 @@ class AddStoryActivity : AppCompatActivity() {
 
             val description = binding.etDesc.text.toString()
 
-            viewModel.postStory(img, description)
+            if (description.isEmpty()){
+                Toast.makeText(this, R.string.description_cannot_be_empty, Toast.LENGTH_SHORT).show()
+
+            } else {
+                viewModel.postStory(img, description)
+            }
         }
     }
 

@@ -26,8 +26,9 @@
         app:fabCradleMargin="20dp"
         app:fabCradleVerticalOffset="10dp"
         app:fabCradleRoundedCornerRadius="40dp"
-        app:backgroundTint="@color/dark_purple"
+        android:backgroundTint="@color/dark_purple"
         android:layout_gravity="bottom"
+        app:backgroundTint="@android:color/transparent"
         >
         
         <com.google.android.material.bottomnavigation.BottomNavigationView

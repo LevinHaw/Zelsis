@@ -35,8 +35,6 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigationView.background = null
         binding.bottomNavigationView.menu.getItem(1).isEnabled = false
 
-        replaceFragment(HomeFragment())
-
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.container_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
@@ -44,8 +42,8 @@ class HomeActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.menuHome -> replaceFragment(HomeFragment())
-                R.id.menuProfile -> replaceFragment(ProfileFragment())
+                R.id.menuHome -> navController.navigate(R.id.homeFragment)
+                R.id.menuProfile -> navController.navigate(R.id.profileFragment)
                 else -> {
                 }
             }
@@ -58,11 +56,5 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    private fun replaceFragment(fragment: Fragment){
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.container_fragment, fragment)
-        fragmentTransaction.commit()
 
-    }
 }

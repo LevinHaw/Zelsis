@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Zelsis</string>
+    <string name="desc">Jelajahi semua pengalaman yang paling menarik dan rasakan perjalanan magis dan mulailah bersama kami</string>
+    <string name="title_welcome">Buatlah cerita bersama kami</string>
+    <string name="subtitle_welcome">Selamat datang!</string>
+    <string name="login">Masuk</string>
+    <string name="sign_up">Daftar</string>
+    <string name="password">Kata sandi</string>
+    <string name="password_error">Kata sandi harus mempunyai setidaknya 8 karakter</string>
+    <string name="welcome_back">Selamat Datang Kembali</string>
+    <string name="login_to_your_account">Masuk ke akun anda</string>
+    <string name="email">Email</string>
+    <string name="signup_screen_login">Tidak mempunyai akun? <b> <u>Daftar</u></b></string>
+    <string name="register">Daftar</string>
+    <string name="create_your_account">Buatlah akun anda</string>
+    <string name="name">Nama</string>
+    <string name="login_screen_signup">Sudah mempunyai akun? <b><u>Masuk</u></b></string>
+    <string name="content_img_desc">Gambar kucing</string>
+    <string name="content_bg_green_desc">latar hijau</string>
+    <string name="content_character_desc" translatable="false">karakter gambar</string>
+    <string name="home">Beranda</string>
+    <string name="profile">Profil</string>
+
+    <string name="name_placeholder">Nama</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="description">Deskripsi</string>
+    <string name="upload">Unggah</string>
+    <string name="date">dd/mm/yyyy</string>
+    <string name="placeholder_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="email_or_password_isempty">Email dan kata sandi tidak boleh kosong</string>
+    <string name="invalid_email_format">Format email salah</string>
+    <string name="login_success">Sukses masuk</string>
+    <string name="login_failed">Gagal masuk</string>
+    <string name="register_failed">Gagal daftar</string>
+    <string name="register_success">Sukses daftar</string>
+    <string name="logout">Keluar</string>
+    <string name="phone_number">Nomor telepon</string>
+    <string name="permission_request_granted">Permintaan izin diterima</string>
+    <string name="permission_request_denied">Permintaan izin ditolak</string>
+    <string name="description_cannot_be_empty" >Deskripsi tidak boleh kosong</string>
+    <string name="error_server_respond">Terdapat eror pada respon server</string>
+</resources>

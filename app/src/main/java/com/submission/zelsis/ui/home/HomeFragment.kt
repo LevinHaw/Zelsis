@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val homeViewModel: HomeViewModel by viewModels {
-        ViewModelFactory.getInstance(requireContext())
+        ViewModelFactory.getInstance(requireActivity())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

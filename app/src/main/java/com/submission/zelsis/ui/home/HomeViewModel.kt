@@ -38,26 +38,30 @@ class HomeViewModel(
     fun getAllStory(){
         _isLoading.value = true
 
-        viewModelScope.launch {
-            val storyResponse = userRepository.getAllStory()
+        try {
+            viewModelScope.launch {
+                val storyResponse = userRepository.getAllStory()
 
-            when (storyResponse){
-                is Result.Success -> {
-                    _isError.value = false
-                    _stories.value = storyResponse.data?.listStory
-                    _isLoading.value = false
-                }
-                is Result.Error -> {
-                    _isError.value = true
-                    _message.value = storyResponse.message.toString()
-                    _isLoading.value = false
-                    Log.e(TAG, storyResponse.message.toString())
-                }
-                is Result.Loading -> {
-                    _isError.value = false
-                    _isLoading.value = true
+                when (storyResponse){
+                    is Result.Success -> {
+                        _isError.value = false
+                        _stories.value = storyResponse.data?.listStory
+                        _isLoading.value = false
+                    }
+                    is Result.Error -> {
+                        _isError.value = true
+                        _message.value = storyResponse.message.toString()
+                        _isLoading.value = false
+                        Log.e(TAG, storyResponse.message.toString())
+                    }
+                    is Result.Loading -> {
+                        _isError.value = false
+                        _isLoading.value = true
+                    }
                 }
             }
+        } catch (e: Exception){
+            Log.e(TAG, "Exception: ${e.message}")
         }
     }
 
@@ -70,7 +74,7 @@ class HomeViewModel(
     }
 
     companion object {
-        private const val TAG = "MainViewModel"
+        private const val TAG = "HomeViewModel"
     }
 
 }

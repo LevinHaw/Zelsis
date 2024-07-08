@@ -56,7 +56,6 @@ class DetailStoryActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val DETAIL_STORY_ID = "detail_story_id"
         const val DETAIL_STORY_IMAGE = "detail_story_image"
         const val DETAIL_STORY_NAME = "detail_story_name"
         const val DETAIL_STORY_DESC = "detail_story_desc"

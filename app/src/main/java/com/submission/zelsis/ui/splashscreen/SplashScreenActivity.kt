@@ -20,7 +20,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashScreen : AppCompatActivity() {
+class SplashScreenActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySplashScreenBinding
     private val viewModel by viewModels<SplashScreenViewModel> {
@@ -50,7 +50,7 @@ class SplashScreen : AppCompatActivity() {
             if (!user.isLogin){
                 GlobalScope.launch(Dispatchers.IO) {
                     delay(3400L)
-                    Intent(this@SplashScreen, WelcomeActivity::class.java).also {
+                    Intent(this@SplashScreenActivity, WelcomeActivity::class.java).also {
                         startActivity(it)
                         finish()
                     }
@@ -59,7 +59,7 @@ class SplashScreen : AppCompatActivity() {
                 Log.d(TAG, user.token)
                 GlobalScope.launch(Dispatchers.IO) {
                     delay(3400L)
-                    Intent(this@SplashScreen, HomeActivity::class.java).also {
+                    Intent(this@SplashScreenActivity, HomeActivity::class.java).also {
                         startActivity(it)
                         finish()
                     }
