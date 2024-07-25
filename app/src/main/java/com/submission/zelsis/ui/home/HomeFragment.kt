@@ -1,5 +1,6 @@
 package com.submission.zelsis.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.submission.zelsis.databinding.FragmentHomeBinding
 import com.submission.zelsis.model.UserModel
 import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.adapter.StoryAdapter
+import com.submission.zelsis.ui.map.MapsActivity
 import com.submission.zelsis.util.ViewModelFactory
 
 
@@ -36,6 +38,11 @@ class HomeFragment : Fragment() {
         homeViewModel.getAllStory()
         setupAction()
         checkingResult()
+
+        binding.ibMap.setOnClickListener {
+            val intent = Intent(activity, MapsActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
