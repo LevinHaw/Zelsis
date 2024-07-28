@@ -8,18 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.submission.zelsis.R
-import com.submission.zelsis.data.remote.response.ListStoryItem
-import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.databinding.FragmentHomeBinding
-import com.submission.zelsis.model.UserModel
-import com.submission.zelsis.repository.UserRepository
 import com.submission.zelsis.ui.adapter.StoryAdapter
 import com.submission.zelsis.ui.map.MapsActivity
 import com.submission.zelsis.util.ViewModelFactory
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -34,8 +34,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         takeName()
-        homeViewModel.getAllStory()
         setupAction()
         checkingResult()
 
@@ -59,24 +59,23 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-    }
-
     private fun setupAction(){
-        homeViewModel.isLoading.observe(viewLifecycleOwner, Observer{
-            showLoading(it)
-        })
-        homeViewModel.stories.observe(viewLifecycleOwner, Observer{ stories ->
-            setAdapter(stories)
-        })
-    }
-
-    private fun setAdapter(stories: List<ListStoryItem>){
         val adapter = StoryAdapter()
-        adapter.submitList(stories)
+
         binding.rvStory.adapter = adapter
         binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
+        
+        homeViewModel.story.observe(viewLifecycleOwner, Observer{
+            if (it != null){
+                adapter.submitData(lifecycle, it)
+            }
+        })
+
+        lifecycleScope.launch {
+            adapter.loadStateFlow.collectLatest { loadStates ->
+                binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
+            }
+        }
     }
 
     private fun checkingResult(){

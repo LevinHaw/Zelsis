@@ -1,4 +1,4 @@
-package com.submission.zelsis.model
+package com.submission.zelsis.data.local.database.model
 
 data class UserModel(
     val name: String,

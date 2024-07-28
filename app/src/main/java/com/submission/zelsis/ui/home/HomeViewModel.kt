@@ -5,28 +5,24 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.submission.zelsis.data.remote.response.ListStoryItem
-import com.submission.zelsis.model.UserModel
-import com.submission.zelsis.repository.UserRepository
-import com.submission.zelsis.util.Result
+import com.submission.zelsis.data.repository.StoryRepository
+import com.submission.zelsis.data.repository.UserRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val storyRepository: StoryRepository
 ): ViewModel() {
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _isError = MutableLiveData<Boolean>()
     val isError: LiveData<Boolean> = _isError
 
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> = _message
-
-    private val _stories = MutableLiveData<List<ListStoryItem>>()
-    val stories: LiveData<List<ListStoryItem>> = _stories
 
     private val _name = MutableLiveData<String?>()
     val name: MutableLiveData<String?> = _name
@@ -35,35 +31,8 @@ class HomeViewModel(
         getName()
     }
 
-    fun getAllStory(){
-        _isLoading.value = true
-
-        try {
-            viewModelScope.launch {
-                val storyResponse = userRepository.getAllStory()
-
-                when (storyResponse){
-                    is Result.Success -> {
-                        _isError.value = false
-                        _stories.value = storyResponse.data?.listStory
-                        _isLoading.value = false
-                    }
-                    is Result.Error -> {
-                        _isError.value = true
-                        _message.value = storyResponse.message.toString()
-                        _isLoading.value = false
-                        Log.e(TAG, storyResponse.message.toString())
-                    }
-                    is Result.Loading -> {
-                        _isError.value = false
-                        _isLoading.value = true
-                    }
-                }
-            }
-        } catch (e: Exception){
-            Log.e(TAG, "Exception: ${e.message}")
-        }
-    }
+    val story: LiveData<PagingData<ListStoryItem>> =
+        storyRepository.getAllStory().cachedIn(viewModelScope)
 
     private fun getName(){
         viewModelScope.launch {

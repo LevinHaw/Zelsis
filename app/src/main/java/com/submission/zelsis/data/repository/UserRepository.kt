@@ -1,4 +1,4 @@
-package com.submission.zelsis.repository
+package com.submission.zelsis.data.repository
 
 import com.google.gson.Gson
 import com.submission.zelsis.R
@@ -9,7 +9,7 @@ import com.submission.zelsis.data.remote.response.LoginResponse
 import com.submission.zelsis.data.remote.response.RegisterResponse
 import com.submission.zelsis.data.remote.response.StoryResponse
 import com.submission.zelsis.data.remote.retrofit.ApiConfig
-import com.submission.zelsis.model.UserModel
+import com.submission.zelsis.data.local.database.model.UserModel
 import com.submission.zelsis.util.Result
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
@@ -62,59 +62,20 @@ class UserRepository private constructor(
         userPreference.logout()
     }
 
-    suspend fun getAllStory(): Result<StoryResponse>{
-        return try {
-            val getAllStory = apiService.getAllStory()
-            Result.Success(getAllStory)
-        } catch (e: HttpException){
-            val error = e.response()?.errorBody()?.string()
-            val response = Gson().fromJson(error, StoryResponse::class.java)
-            Result.Error(response, R.string.error_server_respond.toString())
-        } catch (e: Exception){
-            Result.Error(null, e.message.toString())
-        }
-    }
-
-    suspend fun postStory(image: File, description: String): Result<ImageUploadResponse>{
-        return try {
-            val requestDesc = description.toRequestBody(
-                "text/plain".toMediaType()
-            )
-
-            val requestImg = image.asRequestBody(
-                "image/jpeg".toMediaType()
-            )
-
-            val multiPart = MultipartBody.Part.createFormData(
-                "photo", image.name , requestImg
-            )
-
-            val postStory = apiService.postStory(multiPart, requestDesc)
-            Result.Success(postStory)
-
-        } catch (e: HttpException){
-            val error = e.response()?.errorBody()?.string()
-            val response = Gson().fromJson(error, ImageUploadResponse::class.java)
-            Result.Error(response, R.string.error_server_respond.toString())
-        } catch (e: Exception){
-            Result.Error(null, e.message.toString())
-        }
-    }
-
     fun updateToken(token: String) {
-        instance?.let {
+        INSTANCE?.let {
             it.apiService = ApiConfig.getApiService(token)
         }
     }
 
     companion object {
         @Volatile
-        private var instance: UserRepository? = null
+        private var INSTANCE: UserRepository? = null
         fun getInstance(
             userPreference: UserPreference, apiService: ApiService
-        ): UserRepository = instance ?: synchronized(this) {
-            instance ?: UserRepository(userPreference, apiService)
-        }.also { instance = it }
+        ): UserRepository = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: UserRepository(userPreference, apiService)
+        }.also { INSTANCE = it }
     }
 
 }
