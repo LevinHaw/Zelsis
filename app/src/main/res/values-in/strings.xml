@@ -41,4 +41,6 @@
     <string name="permission_request_denied">Permintaan izin ditolak</string>
     <string name="description_cannot_be_empty" >Deskripsi tidak boleh kosong</string>
     <string name="error_server_respond">Terdapat eror pada respon server</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="input_location">Tambahkan lokasi anda</string>
 </resources>

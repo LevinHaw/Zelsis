@@ -9,14 +9,21 @@ import androidx.paging.liveData
 import com.google.gson.Gson
 import com.submission.zelsis.R
 import com.submission.zelsis.data.local.database.StoryDatabase
+import com.submission.zelsis.data.local.database.model.UserModel
 import com.submission.zelsis.data.local.preference.UserPreference
 import com.submission.zelsis.data.pagination.StoryRemoteMediator
 import com.submission.zelsis.data.remote.response.ImageUploadResponse
 import com.submission.zelsis.data.remote.response.ListStoryItem
+import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.data.remote.retrofit.ApiService
+import com.submission.zelsis.data.repository.UserRepository.Companion
 import com.submission.zelsis.util.Result
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
@@ -25,10 +32,10 @@ import java.io.File
 class StoryRepository private constructor(
     private val userPreference: UserPreference,
     private val storyDatabase: StoryDatabase,
-    private val apiService: ApiService
-){
+) {
 
-    fun getAllStory(): LiveData<PagingData<ListStoryItem>>{
+
+    fun getAllStory(): LiveData<PagingData<ListStoryItem>> {
         @OptIn(ExperimentalPagingApi::class)
         return Pager(
             config = PagingConfig(
@@ -41,28 +48,22 @@ class StoryRepository private constructor(
         ).liveData
     }
 
-    suspend fun postStory(image: File, description: String): Result<ImageUploadResponse> {
+    suspend fun postStory(
+        image: MultipartBody.Part,
+        description: RequestBody,
+        lat: RequestBody? = null,
+        lon: RequestBody? = null
+    ): Result<ImageUploadResponse> {
         return try {
-            val requestDesc = description.toRequestBody(
-                "text/plain".toMediaType()
-            )
-
-            val requestImg = image.asRequestBody(
-                "image/jpeg".toMediaType()
-            )
-
-            val multiPart = MultipartBody.Part.createFormData(
-                "photo", image.name , requestImg
-            )
-
-            val postStory = apiService.postStory(multiPart, requestDesc)
+            val apiService = ApiConfig.getApiService(userPreference.getSession().first().token)
+            val postStory = apiService.postStory(image, description, lat, lon)
             Result.Success(postStory)
 
-        } catch (e: HttpException){
+        } catch (e: HttpException) {
             val error = e.response()?.errorBody()?.string()
             val response = Gson().fromJson(error, ImageUploadResponse::class.java)
             Result.Error(response, R.string.error_server_respond.toString())
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Result.Error(null, e.message.toString())
         }
     }
@@ -72,9 +73,9 @@ class StoryRepository private constructor(
         private var INSTANCE: StoryRepository? = null
 
         fun getInstance(
-            userPreference: UserPreference, storyDatabase: StoryDatabase, apiService: ApiService
-        ): StoryRepository = INSTANCE ?: synchronized(this){
-            INSTANCE ?: StoryRepository(userPreference, storyDatabase, apiService)
-        }.also { INSTANCE = it }
+            userPreference: UserPreference, storyDatabase: StoryDatabase
+        ): StoryRepository = INSTANCE ?: synchronized(this) {
+            INSTANCE ?: StoryRepository(userPreference, storyDatabase)
+        }
     }
 }

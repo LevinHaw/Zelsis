@@ -21,10 +21,8 @@ object Injection {
 
     fun provideStoryRepository(context: Context): StoryRepository {
         val pref = UserPreference.getInstance(context.dataStore)
-        val userModel = runBlocking { pref.getSession().first() }
-        val apiService = ApiConfig.getApiService(userModel.token)
         val database = StoryDatabase.getDatabase(context)
-        return StoryRepository.getInstance(pref, database, apiService)
+        return StoryRepository.getInstance(pref, database)
     }
 
 }

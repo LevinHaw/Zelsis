@@ -41,4 +41,6 @@
     <string name="description_cannot_be_empty" translatable="false">Description cannot be empty</string>
     <string name="error_server_respond">There is an error with server respond</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="input_location">Add your location</string>
+    <string name="failed_location">Failed to retrieve location</string>
 </resources>

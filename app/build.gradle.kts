@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.play.services.maps)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.play.services.location)
     ksp(libs.room.compiler)
     implementation(libs.androidx.room.paging)
     implementation(libs.androidx.core.testing)
