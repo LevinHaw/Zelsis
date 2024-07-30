@@ -6,23 +6,36 @@ import android.media.MediaCasException.ResourceBusyException
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.MarkerOptions
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityMapsBinding
+import com.submission.zelsis.ui.login.LoginViewModel
+import com.submission.zelsis.util.ViewModelFactory
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
+
+    private val viewModel by viewModels<MapViewModel> {
+        ViewModelFactory.getInstance(this)
+    }
+
+    private val boundsBuilder = LatLngBounds.Builder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +59,30 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         getMyLocation()
         setMapStyle()
+        addManyMarkerLoc()
+
+        viewModel.isError.observe(this){ isError ->
+            if (isError){
+                viewModel.errorMessage.observe(this){ errorMessage ->
+                    Toast.makeText(this, "Cannot retrieve location story", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        viewModel.isLoading.observe(this) {
+            showLoading(it)
+        }
+
+        mMap.setOnPoiClickListener { pointOfInterest ->
+            val poiMarker = mMap.addMarker(
+                MarkerOptions()
+                    .position(pointOfInterest.latLng)
+                    .title(pointOfInterest.name)
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+            )
+            poiMarker?.showInfoWindow()
+        }
+
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
@@ -78,6 +115,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         } catch (exception: Resources.NotFoundException){
             Log.e(TAG, "Can't find map style resource, Error: ", exception)
         }
+    }
+
+    private fun addManyMarkerLoc(){
+        viewModel.listStories.observe(this){ stories ->
+            stories.forEach { data ->
+                val latLong = LatLng(data.lat!!, data.lon!!)
+                mMap.addMarker(
+                    MarkerOptions()
+                        .position(latLong)
+                        .title(data.name)
+                        .snippet(data.description)
+                )
+                boundsBuilder.include(latLong)
+            }
+
+            val bounds: LatLngBounds = boundsBuilder.build()
+            mMap.animateCamera(
+                CameraUpdateFactory.newLatLngBounds(
+                    bounds,
+                    resources.displayMetrics.widthPixels,
+                    resources.displayMetrics.heightPixels,
+                    300
+                )
+            )
+        }
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     companion object {

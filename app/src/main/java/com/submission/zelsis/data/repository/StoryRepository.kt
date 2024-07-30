@@ -14,6 +14,7 @@ import com.submission.zelsis.data.local.preference.UserPreference
 import com.submission.zelsis.data.pagination.StoryRemoteMediator
 import com.submission.zelsis.data.remote.response.ImageUploadResponse
 import com.submission.zelsis.data.remote.response.ListStoryItem
+import com.submission.zelsis.data.remote.response.StoryResponse
 import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.data.remote.retrofit.ApiService
 import com.submission.zelsis.data.repository.UserRepository.Companion
@@ -33,6 +34,19 @@ class StoryRepository private constructor(
     private val userPreference: UserPreference,
     private val storyDatabase: StoryDatabase,
 ) {
+
+    suspend fun getStoryWithLocation(): Result<StoryResponse>{
+        return try {
+            val apiService = ApiConfig.getApiService(userPreference.getSession().first().token)
+            val storyWithLocation = apiService.getStoryWithLocation()
+            val response = storyWithLocation.listStory.filter {
+                it.lat != null && it.lon != null
+            }
+            Result.Success(StoryResponse(listStory = response, error = false))
+        } catch (e: Exception){
+            Result.Error(null, e.message.toString())
+        }
+    }
 
 
     fun getAllStory(): LiveData<PagingData<ListStoryItem>> {

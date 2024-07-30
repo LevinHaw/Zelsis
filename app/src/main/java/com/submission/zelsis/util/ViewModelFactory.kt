@@ -9,6 +9,7 @@ import com.submission.zelsis.data.repository.UserRepository
 import com.submission.zelsis.ui.add_story.AddStoryViewModel
 import com.submission.zelsis.ui.home.HomeViewModel
 import com.submission.zelsis.ui.login.LoginViewModel
+import com.submission.zelsis.ui.map.MapViewModel
 import com.submission.zelsis.ui.profile.ProfileViewModel
 import com.submission.zelsis.ui.signup.SignUpViewModel
 import com.submission.zelsis.ui.splashscreen.SplashScreenViewModel
@@ -38,6 +39,9 @@ class ViewModelFactory(
             }
             modelClass.isAssignableFrom(AddStoryViewModel::class.java) -> {
                 AddStoryViewModel(storyRepository) as T
+            }
+            modelClass.isAssignableFrom(MapViewModel::class.java) -> {
+                MapViewModel(storyRepository) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
