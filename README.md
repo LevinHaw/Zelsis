@@ -10,14 +10,17 @@ base url : https://story-api.dicoding.dev/v1/
 
 ### Dependencies
 
- - Kotlin : 1.8.22
- - Retrofit : 2.9.0
- - Glide : 4.16.0
+ - Kotlin : 1.9.0
+ - Retrofit : 2.11.0
+ - Glide : 5.0.0
  - Circle Image View : 3.1.0
-
- - MVVM and Live Data : 2.6.2
+ - MVVM and Live Data : 2.8.2
  - Room : 2.5.2
- - DataStore : 1.0.0
+ - DataStore preferences : 1.1.1
+ - Paging : 3.3.1
+ - KSP : 1.9.0-1.0.11
+ - Mockito : 4.4.0
+ - Espresso : 3.6.1
 
 
 ### Tech stack :
