@@ -1,8 +1,10 @@
 package com.submission.zelsis.ui.detail_story
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -11,6 +13,7 @@ import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivityDetailStoryBinding
 import com.submission.zelsis.ui.home.HomeActivity
 import com.submission.zelsis.util.DateFormat
+import java.util.TimeZone
 
 class DetailStoryActivity : AppCompatActivity() {
 
@@ -52,7 +55,7 @@ class DetailStoryActivity : AppCompatActivity() {
             .into(binding.ivStory)
 
         binding.tvDesc.text = storyDesc
-        binding.tvDate.text = DateFormat.formatDate(storyDate!!)
+        binding.tvDate.text = DateFormat.formatDate(storyDate!!, TimeZone.getDefault().id)
     }
 
     companion object {

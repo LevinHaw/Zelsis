@@ -11,6 +11,7 @@ import com.submission.zelsis.data.remote.response.StoryResponse
 import com.submission.zelsis.data.remote.retrofit.ApiConfig
 import com.submission.zelsis.data.local.database.model.UserModel
 import com.submission.zelsis.util.Result
+import com.submission.zelsis.util.wrapEspressoIdlingResource
 import kotlinx.coroutines.flow.Flow
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
@@ -34,15 +35,17 @@ class UserRepository private constructor(
     }
 
     suspend fun login(email: String, password: String): Result<LoginResponse> {
-        return try {
-            val login = apiService.login(email, password)
-            Result.Success(login)
-        } catch (e: HttpException) {
-            val error = e.response()?.errorBody()?.string()
-            val response = Gson().fromJson(error, LoginResponse::class.java)
-            Result.Error(response, R.string.error_server_respond.toString())
-        } catch (e: Exception){
-            Result.Error(null, e.message.toString())
+        wrapEspressoIdlingResource {
+            return try {
+                val login = apiService.login(email, password)
+                Result.Success(login)
+            } catch (e: HttpException) {
+                val error = e.response()?.errorBody()?.string()
+                val response = Gson().fromJson(error, LoginResponse::class.java)
+                Result.Error(response, R.string.error_server_respond.toString())
+            } catch (e: Exception){
+                Result.Error(null, e.message.toString())
+            }
         }
     }
 

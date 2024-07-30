@@ -35,6 +35,10 @@ class StoryRepository private constructor(
     private val storyDatabase: StoryDatabase,
 ) {
 
+    fun getSession(): Flow<UserModel>{
+        return userPreference.getSession()
+    }
+
     suspend fun getStoryWithLocation(): Result<StoryResponse>{
         return try {
             val apiService = ApiConfig.getApiService(userPreference.getSession().first().token)

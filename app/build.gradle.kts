@@ -44,6 +44,11 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += listOf("-Xopt-in=kotlin.RequiresOptIn")
+    }
+    testOptions {
+        animationsDisabled = true
+        unitTests.isReturnDefaultValues = true
     }
 
     configurations {
@@ -64,8 +69,6 @@ dependencies {
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
 
-
-
     implementation(libs.retrofit)
     implementation(libs.gson)
     implementation(libs.okhttp)
@@ -78,16 +81,25 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.room.ktx)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.espresso.idling.resource)
+    implementation(libs.androidx.espresso.intents)
     ksp(libs.room.compiler)
     implementation(libs.androidx.room.paging)
-    implementation(libs.androidx.core.testing)
-    implementation(libs.kotlinx.coroutines.test)
-    implementation(libs.mockito.inline)
-    implementation(libs.mockito.core)
     implementation(libs.androidx.paging.runtime.ktx)
+
+    testImplementation(libs.junit.junit)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.mockito.core)
+    androidTestImplementation(libs.androidx.core.testing)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    debugImplementation(libs.androidx.fragment.testing)
 }
 

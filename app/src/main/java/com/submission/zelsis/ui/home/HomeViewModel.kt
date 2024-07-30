@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val userRepository: UserRepository,
     private val storyRepository: StoryRepository
 ): ViewModel() {
 
@@ -27,16 +26,12 @@ class HomeViewModel(
     private val _name = MutableLiveData<String?>()
     val name: MutableLiveData<String?> = _name
 
-    init {
-        getName()
-    }
-
     val story: LiveData<PagingData<ListStoryItem>> =
         storyRepository.getAllStory().cachedIn(viewModelScope)
 
-    private fun getName(){
+    fun getName(){
         viewModelScope.launch {
-            userRepository.getSession().collectLatest { userModel ->
+            storyRepository.getSession().collectLatest { userModel ->
                 _name.value = userModel.email
             }
         }
