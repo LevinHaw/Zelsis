@@ -239,7 +239,6 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
 
-
     private fun showImage() {
         currentImageUri?.let {
             binding.ivShow.setImageURI(it)
