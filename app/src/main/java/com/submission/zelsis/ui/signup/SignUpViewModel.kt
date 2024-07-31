@@ -27,9 +27,7 @@ class SignUpViewModel(
         _isLoading.value = true
 
         viewModelScope.launch {
-            val signUpResponse = userRepository.signUp(name, email, password)
-
-            when(signUpResponse){
+            when(val signUpResponse = userRepository.signUp(name, email, password)){
                 is Result.Success -> {
                     _isError.value = false
                     _result.value = signUpResponse.data?.message

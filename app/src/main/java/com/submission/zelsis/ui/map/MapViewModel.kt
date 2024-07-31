@@ -33,9 +33,7 @@ class MapViewModel(
     private fun getStoriesLocation() {
         _isLoading.value = true
         viewModelScope.launch {
-            val response = storyRepository.getStoryWithLocation()
-
-            when (response) {
+            when (val response = storyRepository.getStoryWithLocation()) {
                 is Result.Success-> {
                     _listStories.value = response.data?.listStory
                     _isError.value = false

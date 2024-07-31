@@ -28,9 +28,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
         _isLoading.value = true
 
         viewModelScope.launch {
-            val loginResponse = userRepository.login(email, password)
-
-            when(loginResponse){
+            when(val loginResponse = userRepository.login(email, password)){
                 is Result.Success -> {
                     val name: String = loginResponse.data?.loginResult?.name.toString()
                     val token: String = loginResponse.data?.loginResult?.token.toString()

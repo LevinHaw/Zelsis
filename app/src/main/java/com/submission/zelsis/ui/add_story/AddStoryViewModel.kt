@@ -4,15 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.submission.zelsis.data.local.database.model.UserModel
 import com.submission.zelsis.data.repository.StoryRepository
-import com.submission.zelsis.data.repository.UserRepository
 import com.submission.zelsis.util.Result
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import java.io.File
 
 class AddStoryViewModel(
     private val storyRepository: StoryRepository
@@ -27,8 +23,6 @@ class AddStoryViewModel(
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> = _message
 
-
-
     fun postStory(
         image: MultipartBody.Part,
         description: RequestBody,
@@ -39,9 +33,7 @@ class AddStoryViewModel(
         _isLoading.value = true
 
         viewModelScope.launch {
-            val postStoryResponse = storyRepository.postStory(image, description, lat, lon)
-
-            when (postStoryResponse){
+            when (val postStoryResponse = storyRepository.postStory(image, description, lat, lon)){
                 is Result.Success -> {
                     _isError.value = false
                     _isLoading.value = false

@@ -55,7 +55,7 @@ class DetailStoryActivity : AppCompatActivity() {
             .into(binding.ivStory)
 
         binding.tvDesc.text = storyDesc
-        binding.tvDate.text = DateFormat.formatDate(storyDate!!, TimeZone.getDefault().id)
+        binding.tvDate.text = DateFormat.formatDate(storyDate!!)
     }
 
     companion object {

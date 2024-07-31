@@ -39,8 +39,10 @@
     <string name="phone_number">Nomor telepon</string>
     <string name="permission_request_granted">Permintaan izin diterima</string>
     <string name="permission_request_denied">Permintaan izin ditolak</string>
-    <string name="description_cannot_be_empty" >Deskripsi tidak boleh kosong</string>
+    <string name="description_image_cannot_be_empty">Deskripsi dan gambar tidak boleh kosong</string>
     <string name="error_server_respond">Terdapat eror pada respon server</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="input_location">Tambahkan lokasi anda</string>
+    <string name="image_empty">gambar tidak boleh kosong</string>
+    <string name="failed_location">Gagal menemukan lokasi</string>
 </resources>

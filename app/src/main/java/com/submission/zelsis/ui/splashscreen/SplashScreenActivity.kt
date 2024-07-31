@@ -10,6 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.submission.zelsis.R
 import com.submission.zelsis.databinding.ActivitySplashScreenBinding
 import com.submission.zelsis.ui.home.HomeActivity
@@ -48,7 +49,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
         viewModel.getSession().observe(this){ user ->
             if (!user.isLogin){
-                GlobalScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch{
                     delay(3400L)
                     Intent(this@SplashScreenActivity, WelcomeActivity::class.java).also {
                         startActivity(it)
@@ -57,7 +58,7 @@ class SplashScreenActivity : AppCompatActivity() {
                 }
             } else {
                 Log.d(TAG, user.token)
-                GlobalScope.launch(Dispatchers.IO) {
+                lifecycleScope.launch{
                     delay(3400L)
                     Intent(this@SplashScreenActivity, HomeActivity::class.java).also {
                         startActivity(it)

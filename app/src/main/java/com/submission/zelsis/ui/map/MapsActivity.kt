@@ -52,19 +52,24 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
-        mMap.uiSettings.isZoomControlsEnabled = true
-        mMap.uiSettings.isIndoorLevelPickerEnabled = true
-        mMap.uiSettings.isCompassEnabled = true
-        mMap.uiSettings.isMapToolbarEnabled = true
+
+        mMap.uiSettings.apply {
+            isZoomControlsEnabled = true
+            isIndoorLevelPickerEnabled = true
+            isCompassEnabled = true
+            isMapToolbarEnabled = true
+        }
+
 
         getMyLocation()
         setMapStyle()
         addManyMarkerLoc()
 
-        viewModel.isError.observe(this){ isError ->
-            if (isError){
-                viewModel.errorMessage.observe(this){ errorMessage ->
-                    Toast.makeText(this, "Cannot retrieve location story", Toast.LENGTH_SHORT).show()
+        viewModel.isError.observe(this) { isError ->
+            if (isError) {
+                viewModel.errorMessage.observe(this) { errorMessage ->
+                    Toast.makeText(this, "Cannot retrieve location story", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
@@ -88,37 +93,38 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
-        if (isGranted){
+        if (isGranted) {
             getMyLocation()
         }
     }
 
     private fun getMyLocation() {
         if (ContextCompat.checkSelfPermission(
-            this.applicationContext.applicationContext,
-            android.Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED){
+                this.applicationContext.applicationContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             mMap.isMyLocationEnabled = true
         } else {
             requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
-    private fun setMapStyle(){
+    private fun setMapStyle() {
         try {
             val success =
                 mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_style))
 
-            if (!success){
+            if (!success) {
                 Log.e(TAG, "Failed to parsing json")
             }
-        } catch (exception: Resources.NotFoundException){
+        } catch (exception: Resources.NotFoundException) {
             Log.e(TAG, "Can't find map style resource, Error: ", exception)
         }
     }
 
-    private fun addManyMarkerLoc(){
-        viewModel.listStories.observe(this){ stories ->
+    private fun addManyMarkerLoc() {
+        viewModel.listStories.observe(this) { stories ->
             stories.forEach { data ->
                 val latLong = LatLng(data.lat!!, data.lon!!)
                 mMap.addMarker(

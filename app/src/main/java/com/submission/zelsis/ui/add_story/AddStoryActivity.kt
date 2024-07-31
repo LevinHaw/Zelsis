@@ -194,47 +194,49 @@ class AddStoryActivity : AppCompatActivity() {
     }
 
     private fun postStory() {
-        viewModel.isLoading.observe(this) {
-            showLoading(it)
-        }
 
-        viewModel.isError.observe(this) { isError ->
-            if (isError == true) {
-                viewModel.message.observe(this) { message ->
-                    Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
+        val description = binding.etDesc.text.toString()
+
+        if (description.isNotBlank() && currentImageUri != null){
+            viewModel.isLoading.observe(this) {
+                showLoading(it)
+            }
+
+            viewModel.isError.observe(this) { isError ->
+                if (isError == true) {
+                    viewModel.message.observe(this) { message ->
+                        Toast.makeText(this, message.toString(), Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Upload successfull", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(this, HomeActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                    startActivity(intent)
+                    finish()
                 }
-            } else {
-                Toast.makeText(this, "Upload successfull", Toast.LENGTH_SHORT).show()
-
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(intent)
-                finish()
             }
-        }
 
-        currentImageUri?.let { uri ->
-            val img = uriToFile(uri, this@AddStoryActivity)
-            img.reduceFileImage()
+            currentImageUri?.let { uri ->
+                val img = uriToFile(uri, this@AddStoryActivity)
+                img.reduceFileImage()
 
-            val description = binding.etDesc.text.toString()
-            val requestBody = description.toRequestBody("text/plain".toMediaType())
-            val requestLat = lat?.toString()?.toRequestBody("text/plain".toMediaType())
-            val requestLong = lon?.toString()?.toRequestBody("text/plain".toMediaType())
-            val requestImageFile = img.asRequestBody("image/jpeg".toMediaType())
-            val multipartBody = MultipartBody.Part.createFormData(
-                "photo",
-                img.name,
-                requestImageFile
-            )
+                val requestBody = description.toRequestBody("text/plain".toMediaType())
+                val requestLat = lat?.toString()?.toRequestBody("text/plain".toMediaType())
+                val requestLong = lon?.toString()?.toRequestBody("text/plain".toMediaType())
+                val requestImageFile = img.asRequestBody("image/jpeg".toMediaType())
+                val multipartBody = MultipartBody.Part.createFormData(
+                    "photo",
+                    img.name,
+                    requestImageFile
+                )
 
-            if (description.isEmpty()) {
-                Toast.makeText(this, R.string.description_cannot_be_empty, Toast.LENGTH_SHORT)
-                    .show()
-
-            } else {
                 viewModel.postStory(multipartBody, requestBody, requestLat, requestLong)
+
             }
+        } else {
+            Toast.makeText(this, R.string.description_image_cannot_be_empty,
+                Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -270,6 +272,8 @@ class AddStoryActivity : AppCompatActivity() {
             requestLocationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
+
+
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
