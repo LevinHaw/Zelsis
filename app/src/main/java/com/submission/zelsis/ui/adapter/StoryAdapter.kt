@@ -14,13 +14,6 @@ import com.submission.zelsis.util.DateFormat
 
 class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(DIFF_CALLBACK) {
 
-    private var onItemClickCallback: OnItemClickCallback? = null
-
-    fun setOnItemClickCallback (onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-
-    }
-
     class MyViewHolder(private val binding: ItemStoryBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(story: ListStoryItem){
             binding.root.setOnClickListener {
@@ -66,7 +59,4 @@ class StoryAdapter: PagingDataAdapter<ListStoryItem, StoryAdapter.MyViewHolder>(
         }
     }
 
-    interface OnItemClickCallback{
-        fun onItemClicked(data: ListStoryItem)
-    }
 }
