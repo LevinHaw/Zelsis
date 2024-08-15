@@ -52,7 +52,7 @@
         android:src="@drawable/ic_add"
         app:layout_anchor="@id/bottomAppBar"
         android:backgroundTint="@color/white"
-        tools:ignore="ContentDescription"
+        android:contentDescription="@string/icon_add"
         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -24,7 +24,8 @@ class UserPreference private constructor(
                 preferences[NAME_KEY] ?: "",
                 preferences[EMAIL_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
+                preferences[IS_LOGIN_KEY] ?: false,
+                preferences[IMAGE_URI_KEY] ?: ""
             )
         }
     }
@@ -35,6 +36,13 @@ class UserPreference private constructor(
             preferences[EMAIL_KEY] = user.email
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = user.isLogin
+            preferences[IMAGE_URI_KEY] = user.imageUri
+        }
+    }
+
+    suspend fun saveImageUri(uri: String) {
+        dataStore.edit { preferences ->
+            preferences[IMAGE_URI_KEY] = uri
         }
     }
 
@@ -52,6 +60,7 @@ class UserPreference private constructor(
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val IMAGE_URI_KEY = stringPreferencesKey("image_uri")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreference {
             return INSTANCE ?: synchronized(this) {

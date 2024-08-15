@@ -17,12 +17,13 @@
         android:translationY="-50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="ContentDescription"/>
+        android:contentDescription="@string/big_green_cicle_white_stroke"/>
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/white_circle"
         android:src="@drawable/circle_white"
         android:translationX="-35dp"
         android:translationY="90dp"
@@ -32,6 +33,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/green_circle"
         android:src="@drawable/circle_green"
         android:translationX="-76dp"
         android:translationY="20dp"
@@ -42,6 +44,7 @@
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/green_circle"
         android:src="@drawable/circle_green"
         android:translationX="100dp"
         android:translationY="-25dp"
@@ -53,6 +56,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/big_green_cicle_white_stroke"
         android:src="@drawable/circle_green_white"
         android:translationY="100dp"
         android:translationX="-100dp"
@@ -62,6 +66,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/white_circle"
         android:src="@drawable/circle_white"
         android:translationY="-60dp"
         android:translationX="10dp"
@@ -71,6 +76,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/green_circle"
         android:src="@drawable/circle_green"
         android:translationX="70dp"
         android:translationY="-15dp"

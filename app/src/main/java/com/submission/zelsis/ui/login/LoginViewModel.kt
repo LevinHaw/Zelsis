@@ -37,7 +37,7 @@ class LoginViewModel(private val userRepository: UserRepository): ViewModel() {
                     _result.value = loginResponse.message.toString()
                     _isLoading.value = false
 
-                    _userToken.value = UserModel(email, name, token, isLogin = true)
+                    _userToken.value = UserModel(name, email, token, isLogin = true)
                     saveSession(userToken.value!!)
                     userRepository.updateToken(token)
                 }

@@ -17,7 +17,7 @@
     <string name="login_screen_signup">Already have an account? <b><u>Login</u></b></string>
     <string name="content_img_desc">Cat image</string>
     <string name="content_bg_green_desc">bg_green</string>
-    <string name="content_character_desc" translatable="false">image_character</string>
+    <string name="content_character_desc">image_character</string>
     <string name="home">Home</string>
     <string name="profile">Profile</string>
 
@@ -44,4 +44,17 @@
     <string name="input_location">Add your location</string>
     <string name="failed_location">Failed to retrieve location</string>
     <string name="image_empty">image cannot be empty</string>
+    <string name="white_circle">white circle</string>
+    <string name="green_circle">green circle</string>
+    <string name="big_green_cicle_white_stroke">big green cicle white stroke</string>
+    <string name="icon_user">icon user</string>
+    <string name="icon_add">icon add</string>
+    <string name="icon_back">icon back</string>
+    <string name="preview_image">preview image</string>
+    <string name="image_story">image story</string>
+    <string name="icon_map">icon map</string>
+    <string name="image_profile">image profile</string>
+    <string name="story_image">story image</string>
+    <string name="show_name">Name :</string>
+    <string name="show_email">Email :</string>
 </resources>

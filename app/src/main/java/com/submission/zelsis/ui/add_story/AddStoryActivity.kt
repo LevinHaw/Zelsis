@@ -81,7 +81,9 @@ class AddStoryActivity : AppCompatActivity() {
         ) { isGranted: Boolean ->
             if (isGranted){
                 getMyLocation()
-                requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    requestBackgroundLocationPermissionLauncher.launch(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
+                }
             } else {
                 getMyLocation()
             }

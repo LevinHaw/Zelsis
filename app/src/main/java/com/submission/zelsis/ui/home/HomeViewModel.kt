@@ -1,6 +1,6 @@
 package com.submission.zelsis.ui.home
 
-import android.util.Log
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,6 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.submission.zelsis.data.remote.response.ListStoryItem
 import com.submission.zelsis.data.repository.StoryRepository
-import com.submission.zelsis.data.repository.UserRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -32,7 +31,7 @@ class HomeViewModel(
     fun getName(){
         viewModelScope.launch {
             storyRepository.getSession().collectLatest { userModel ->
-                _name.value = userModel.email
+                _name.value = userModel.name
             }
         }
     }

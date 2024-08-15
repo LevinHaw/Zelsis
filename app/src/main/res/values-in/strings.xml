@@ -18,10 +18,9 @@
     <string name="login_screen_signup">Sudah mempunyai akun? <b><u>Masuk</u></b></string>
     <string name="content_img_desc">Gambar kucing</string>
     <string name="content_bg_green_desc">latar hijau</string>
-    <string name="content_character_desc" translatable="false">karakter gambar</string>
+    <string name="content_character_desc">karakter gambar</string>
     <string name="home">Beranda</string>
     <string name="profile">Profil</string>
-
     <string name="name_placeholder">Nama</string>
     <string name="camera">Kamera</string>
     <string name="gallery">Galeri</string>
@@ -45,4 +44,17 @@
     <string name="input_location">Tambahkan lokasi anda</string>
     <string name="image_empty">gambar tidak boleh kosong</string>
     <string name="failed_location">Gagal menemukan lokasi</string>
+    <string name="white_circle">lingkaran putih</string>
+    <string name="green_circle">lingkaran hijau</string>
+    <string name="big_green_cicle_white_stroke">lingkaran hijau besar dengan tepi putih</string>
+    <string name="icon_user">ikon pengguna</string>
+    <string name="icon_add">ikon tambah</string>
+    <string name="icon_back">icon back</string>
+    <string name="preview_image">preview image</string>
+    <string name="image_story">cerita gambar</string>
+    <string name="icon_map">ikon map</string>
+    <string name="image_profile">foto profile</string>
+    <string name="story_image">foto pada cerita</string>
+    <string name="show_name">Nama :</string>
+    <string name="show_email">Email :</string>
 </resources>

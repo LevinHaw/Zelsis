@@ -72,6 +72,10 @@ class UserRepository private constructor(
         }
     }
 
+    suspend fun saveImageUri(uri: String) {
+        userPreference.saveImageUri(uri)
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserRepository? = null
