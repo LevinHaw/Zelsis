@@ -31,7 +31,8 @@ base url : https://story-api.dicoding.dev/v1/
 - Dependency injection
 
 ### UI
-![image](https://github.com/user-attachments/assets/332ce904-35fb-4a5c-8e20-8eaf1411b642)
+![image](https://github.com/user-attachments/assets/8b2e3166-16c8-4d51-9e34-ff894e7eab60)
+
 
 
 ### Get Started
