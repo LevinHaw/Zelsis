@@ -63,8 +63,10 @@ class HomeFragment : Fragment() {
     private fun setupAction(){
         val adapter = StoryAdapter()
 
-        binding.rvStory.adapter = adapter
-        binding.rvStory.layoutManager = LinearLayoutManager(requireContext())
+        _binding?.let {
+            it.rvStory.adapter = adapter
+            it.rvStory.layoutManager = LinearLayoutManager(requireContext())
+        }
         
         homeViewModel.story.observe(viewLifecycleOwner, Observer{
             if (it != null){
@@ -74,7 +76,7 @@ class HomeFragment : Fragment() {
 
         lifecycleScope.launch {
             adapter.loadStateFlow.collectLatest { loadStates ->
-                binding.progressBar.isVisible = loadStates.refresh is LoadState.Loading
+                _binding?.progressBar?.isVisible = loadStates.refresh is LoadState.Loading
             }
         }
     }
@@ -93,7 +95,7 @@ class HomeFragment : Fragment() {
 
     private fun takeName(){
         homeViewModel.name.observe(viewLifecycleOwner, Observer{ name ->
-            binding.tvName.text = name
+            _binding?.tvName?.text = name
         })
     }
 
